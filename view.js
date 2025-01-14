@@ -5,6 +5,7 @@ let achievement = 0;
 let lists = new Lists();
 
 window.onload = start();
+
 function start() {
     let divPresentation = document.createElement("div");
     divPresentation.setAttribute("class", "presentation");

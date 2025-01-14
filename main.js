@@ -28,10 +28,9 @@ function List(name, id) {
         let naming = document.createTextNode(this.name);
         divName.appendChild(naming);
 
-        this.tasks.forEach((t) => function () {
-            let d = t.dom();
-            l.appendChild(d);
-        })
+        for (let i = 0; i < this.tasks.length; i++) {
+            this.tasks[i].dom();
+        }
 
         return l
     }
@@ -40,7 +39,6 @@ function List(name, id) {
         let done = 0;
         for (let i = 0; i < this.tasks.length; i++) {
             if (this.tasks[i].cycle == 'done') {
-                //console.log(this);
                 done ++;
             }
         }
@@ -89,7 +87,6 @@ function Task(nameTask, idList, idTask) {
         }
 
         divChecked.addEventListener('change', (function(e) {
-            console.log(this);
             if (divChecked.checked) {
                 check.style.opacity = "35%";
                 check.style.transition = "1s";
