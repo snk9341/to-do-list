@@ -1,4 +1,5 @@
 let listCount = 0;
+let divSelected;
 let taskCount = 0;
 let achievement = 0;
 
@@ -17,16 +18,17 @@ function start() {
     );
     divPresentation.appendChild(presentation);
 
-    showList();
+    showLists();
 }
 
-function showList() {
+function showLists() {
     if (lists.list.length != 0) {
         lists.dom();
     } else {
         let firstList = new List('Titre', listCount);
         lists.addList(firstList);
+        firstList.dom();
         listCount ++;
+        divSelected = firstList.id;
     }
 }
-

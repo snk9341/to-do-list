@@ -228,3 +228,14 @@ progress:indeterminate {
 .ulstyle {
     padding-left: 15px;
 }
+
+#listDiv {
+    min-height: 500px;
+    padding: auto;
+}
+
+.taskConfirm {
+    min-width: 20px;
+    min-height: 20px;
+    border: 5px;
+}

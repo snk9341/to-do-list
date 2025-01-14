@@ -10,29 +10,49 @@ function List(name, id) {
     }
 
     this.dom = function () {
-        let divListTask = document.getElementById('divListTask');
-        let listDiv = document.getElementById('divTasks');
+        let listDivParent = document.createElement('div');
+        listDivParent.setAttribute('id', 'divParent'.concat(id));
 
         let divName = document.createElement('div');
+        divName.setAttribute('id', 'divName'.concat(id));
         divName.setAttribute('class', 'divName');
-        divName.setAttribute('id', 'divName');
         divName.setAttribute('contenteditable', 'true');
-        divListTask.insertBefore(divName, listDiv);
-
-        divListTask.insertBefore(document.createElement('hr'), listDiv);
-
-        let l = document.createElement('ul');
-        l.setAttribute('id', 'listDiv');
-        listDiv.appendChild(l);
 
         let naming = document.createTextNode(this.name);
         divName.appendChild(naming);
 
+        let l = document.createElement('ul');
+        l.setAttribute('id', 'listDiv');
+
+        let newTasksDiv = document.createElement('div');
+        newTasksDiv.setAttribute('id', 'newTaskDiv'.concat(id));
+        newTasksDiv.setAttribute('class', 'newTaskDiv');
+
+        let tasksName = document.createElement('input');
+        tasksName.setAttribute('type', 'text');
+        tasksName.setAttribute('value', 'nouvelle tache');
+        tasksName.setAttribute('onfocus', 'this.value=""');
+
+        let taskConfirm = document.createElement('button');
+        taskConfirm.setAttribute('id', 'taskConfirm'.concat(id));
+        taskConfirm.setAttribute('class', 'taskConfirm');
+
+        taskConfirm.addEventListener('click', function () {
+            let task = new Task(tasksName.value, this.id, taskCount);
+            task.dom();
+            taskCount ++;
+        })
+
+        newTasksDiv.appendChild(tasksName);
+        newTasksDiv.appendChild(taskConfirm);
+        listDivParent.appendChild(divName);
+        listDivParent.appendChild(l);
+        listDivParent.appendChild(newTasksDiv);
+        basis.appendChild(listDivParent);
+
         for (let i = 0; i < this.tasks.length; i++) {
             this.tasks[i].dom();
         }
-
-        return l
     }
 
     this.progress = function () {
@@ -53,6 +73,8 @@ function Task(nameTask, idList, idTask) {
     this.idTask = idTask;
 
     this.dom = function () {
+        console.log(lists.list[0])
+
         let e = document.createElement('li');
         let o = 'li'
         let concat = o.concat(this.idList); 
