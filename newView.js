@@ -1,4 +1,4 @@
-listCount = 0;
+let listCount = 0;
 let taskCount = 0;
 let achievement = 0;
 
@@ -18,5 +18,15 @@ function start() {
     divPresentation.appendChild(presentation);
 
     showList();
+}
+
+function showList() {
+    if (lists.list.length != 0) {
+        lists.dom();
+    } else {
+        let firstList = new List('Titre', listCount);
+        lists.addList(firstList);
+        listCount ++;
+    }
 }
 
