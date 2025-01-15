@@ -5,7 +5,9 @@ let achievement = 0;
 
 let lists = new Lists();
 
-window.onload = start();
+addEventListener('load', function() {
+    start();
+})
 
 function start() {
     let divPresentation = document.createElement("div");
@@ -21,10 +23,10 @@ function start() {
     showLists();
 }
 
-function showLists() {
+function showLists(id) {
     if (lists.list.length != 0) {
         lists.dom();
-    } else {
+    } else if (lists.list.length == 0) {
         let firstList = new List('Titre', listCount);
         lists.addList(firstList);
         firstList.dom();

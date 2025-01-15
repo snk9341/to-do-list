@@ -38,16 +38,22 @@ function List(name, id) {
         taskConfirm.setAttribute('class', 'taskConfirm');
 
         taskConfirm.addEventListener('click', function () {
-            let task = new Task(tasksName.value, this.id, taskCount);
+            let task = new Task(tasksName.value, id, taskCount);
             task.dom();
             taskCount ++;
         })
+
+        let progression = document.createElement("progress");
+        progression.setAttribute("id", "progress");
+        progression.setAttribute("max", "100");
+        progression.setAttribute("value", achievement);
 
         newTasksDiv.appendChild(tasksName);
         newTasksDiv.appendChild(taskConfirm);
         listDivParent.appendChild(divName);
         listDivParent.appendChild(l);
         listDivParent.appendChild(newTasksDiv);
+        listDivParent.insertBefore(progression, l);
         basis.appendChild(listDivParent);
 
         for (let i = 0; i < this.tasks.length; i++) {
@@ -73,7 +79,7 @@ function Task(nameTask, idList, idTask) {
     this.idTask = idTask;
 
     this.dom = function () {
-        console.log(lists.list[0])
+        lists.list[this.idList].addTask(this);
 
         let e = document.createElement('li');
         let o = 'li'
