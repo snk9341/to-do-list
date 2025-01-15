@@ -138,9 +138,44 @@ function Lists() {
     }
 
     this.dom = function() {
+        for (let i = 0; i <= basis.children.length - 1; i++) {
+            basis.removeChild(basis.children[1])
+        }
+
         let lists = document.createElement('div');
         lists.setAttribute('class', 'lists');
         lists.setAttribute('id', 'lists');
+
+        for (let i = 0; i < this.list.length; i++) {
+            let col4 = document.createElement('div');
+            col4.setAttribute('class', 'col4');
+            col4.setAttribute('id', 'col4'.concat(i));
+            lists.appendChild(col4);
+
+            let listName = document.createElement('div');
+            listName.setAttribute('class', 'nameDiv');
+            listName.setAttribute('id', 'divName'.concat(i));
+            
+            let listNaming = document.createTextNode(this.list[i].name);
+            listName.appendChild(listNaming)
+
+            col4.appendChild(listName);
+
+            let ul = document.createElement('ul');
+
+            for (let j = 0; j < this.list[i].tasks.length; j++) {
+                let listTask = document.createElement('li');
+                listTask.setAttribute('class', 'listTask');
+                listTask.setAttribute('id', 'listTask'.concat(j));
+
+                let namingTask = document.createTextNode(this.list[i].tasks[j].name);
+                //let br = document.createElement('br');
+                listTask.appendChild(namingTask);
+                //listTask.appendChild(br);
+                ul.appendChild(listTask);
+                col4.appendChild(ul);
+            }
+        }
 
         basis.appendChild(lists)
     }

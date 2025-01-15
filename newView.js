@@ -20,6 +20,14 @@ function start() {
     );
     divPresentation.appendChild(presentation);
 
+
+    let pres = document.getElementById('presentation');
+    pres.addEventListener('click', function() {
+        if (lists.list.length > 0) {
+            lists.dom();
+        }
+    })
+
     showLists();
 }
 

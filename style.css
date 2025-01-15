@@ -239,3 +239,28 @@ progress:indeterminate {
     min-height: 20px;
     border: 5px;
 }
+
+.lists {
+    width: 70%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.col4 {
+    width: 33%;
+    border: solid rgb(249, 215, 46) 1px;
+    border-radius: 15px;
+}
+
+.nameDiv {
+    width: 100%;
+    margin: auto;
+    padding-bottom: 15px;
+    color: rgb(249, 215, 46);
+    text-align: center;
+    font-size: 30px;
+}
+
+.listTask {
+    color: rgb(249, 215, 46);
+}
