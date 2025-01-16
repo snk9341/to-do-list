@@ -169,12 +169,16 @@ function Lists() {
                 listTask.setAttribute('id', 'listTask'.concat(j));
 
                 let namingTask = document.createTextNode(this.list[i].tasks[j].name);
-                //let br = document.createElement('br');
                 listTask.appendChild(namingTask);
-                //listTask.appendChild(br);
                 ul.appendChild(listTask);
                 col4.appendChild(ul);
             }
+
+            let selectedList = document.getElementById('col4'.concat(i));
+            selectedList.addEventListener('click', function() {
+                console.log(this)
+            })
+            
         }
 
         basis.appendChild(lists)
