@@ -10,6 +10,12 @@ function List(name, id) {
     }
 
     this.dom = function () {
+        if (basis.children.length > 1) {
+            for (let i = 0; i <= basis.children.length - 1; i++) {
+                basis.removeChild(basis.children[1])
+            }
+        }
+
         let listDivParent = document.createElement('div');
         listDivParent.setAttribute('id', 'divParent'.concat(id));
 
@@ -79,8 +85,9 @@ function Task(nameTask, idList, idTask) {
     this.idTask = idTask;
 
     this.dom = function () {
-        lists.list[this.idList].addTask(this);
-
+        if (!lists.list[this.idList].tasks[this.idTask]){
+            lists.list[this.idList].addTask(this);
+        }
         let e = document.createElement('li');
         let o = 'li'
         let concat = o.concat(this.idList); 
@@ -174,10 +181,9 @@ function Lists() {
                 col4.appendChild(ul);
             }
 
-            let selectedList = document.getElementById('col4'.concat(i));
-            selectedList.addEventListener('click', function() {
-                console.log(this)
-            })
+            col4.addEventListener('click', function() {
+                console.log('oui');
+        });
             
         }
 
