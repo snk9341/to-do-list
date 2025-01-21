@@ -37,16 +37,19 @@ function List(name, id) {
         let tasksName = document.createElement('input');
         tasksName.setAttribute('type', 'text');
         tasksName.setAttribute('value', 'nouvelle tache');
+        tasksName.setAttribute('class', 'inputNewTask');
         tasksName.setAttribute('onfocus', 'this.value=""');
 
         let taskConfirm = document.createElement('button');
         taskConfirm.setAttribute('id', 'taskConfirm'.concat(id));
         taskConfirm.setAttribute('class', 'taskConfirm');
+        taskConfirm.appendChild(document.createTextNode('+'));
 
         taskConfirm.addEventListener('click', function () {
             let task = new Task(tasksName.value, id, taskCount);
+            task.addTask();
             task.dom();
-            taskCount ++;
+            taskCount++;
         })
 
         let progression = document.createElement("progress");
@@ -71,10 +74,13 @@ function List(name, id) {
         let done = 0;
         for (let i = 0; i < this.tasks.length; i++) {
             if (this.tasks[i].cycle == 'done') {
-                done ++;
+                done++;
             }
         }
-        achievement =  Math.floor((done / this.tasks.length)* 100);
+        let pro = document.getElementById('progress');
+        achievement = Math.floor((done / this.tasks.length) * 100);
+        pro.setAttribute("value", achievement);
+
     }
 }
 
@@ -84,13 +90,15 @@ function Task(nameTask, idList, idTask) {
     this.idList = idList;
     this.idTask = idTask;
 
+    this.addTask = function () {
+        lists.list[this.idList].addTask(this);
+        lists.list[this.idList].progress()
+    }
+
     this.dom = function () {
-        if (!lists.list[this.idList].tasks[this.idTask]){
-            lists.list[this.idList].addTask(this);
-        }
         let e = document.createElement('li');
         let o = 'li'
-        let concat = o.concat(this.idList); 
+        let concat = o.concat(this.idList);
         e.setAttribute('id', concat);
         e.setAttribute('class', 'liTaskDom');
         let list = document.getElementById('listDiv');
@@ -105,6 +113,7 @@ function Task(nameTask, idList, idTask) {
 
         let span = document.createElement('span');
         span.setAttribute('contenteditable', 'true');
+        span.setAttribute('id', 'span'.concat(this.idTask));
         span.appendChild(document.createTextNode(this.name));
 
         divCheckbox.appendChild(checkbox);
@@ -114,6 +123,7 @@ function Task(nameTask, idList, idTask) {
 
         let check = document.getElementById("divCheckbox".concat(this.idTask));
         let divChecked = document.getElementById(this.idTask);
+        console.log(this.idTask)
 
         if (this.cycle == 'done') {
             divChecked.checked = true;
@@ -121,17 +131,22 @@ function Task(nameTask, idList, idTask) {
             check.style.transition = "1s";
         }
 
-        divChecked.addEventListener('change', (function(e) {
+        let spanTask = document.getElementById('span'.concat(this.idTask));
+        spanTask.addEventListener('change', (function() {
+            console.log('ok')
+        }).bind(this))
+
+        divChecked.addEventListener('change', (function (e) {
             if (divChecked.checked) {
                 check.style.opacity = "35%";
                 check.style.transition = "1s";
                 this.cycle = 'done';
-                isChecked(idList);
+                lists.list[idList].progress();
             } else {
                 check.style.opacity = "100%";
                 check.style.transition = "1s";
                 this.cycle = 'to do';
-                isChecked(idList);
+                lists.list[idList].progress();
             }
         }).bind(this))
     }
@@ -140,11 +155,11 @@ function Task(nameTask, idList, idTask) {
 function Lists() {
     this.list = [];
 
-    this.addList = function(l) {
+    this.addList = function (l) {
         this.list.push(l);
     }
 
-    this.dom = function() {
+    this.dom = function () {
         for (let i = 0; i <= basis.children.length - 1; i++) {
             basis.removeChild(basis.children[1])
         }
@@ -162,7 +177,7 @@ function Lists() {
             let listName = document.createElement('div');
             listName.setAttribute('class', 'nameDiv');
             listName.setAttribute('id', 'divName'.concat(i));
-            
+
             let listNaming = document.createTextNode(this.list[i].name);
             listName.appendChild(listNaming)
 
@@ -170,7 +185,18 @@ function Lists() {
 
             let ul = document.createElement('ul');
 
-            for (let j = 0; j < this.list[i].tasks.length; j++) {
+            if (i == this.list.length - 1) {
+                let plus = document.createElement('button');
+                plus.setAttribute('id', 'NewDiv');
+                plus.setAttribute('onclick', 'newList()')
+                let divPlus = document.createElement('div');
+                divPlus.setAttribute('id', 'divPlus');
+                divPlus.appendChild(plus);
+                lists.appendChild(divPlus);
+                plus.appendChild(document.createTextNode('+'));
+            }
+
+            for (let j = 0; j < this.list[i].tasks.length && j < 3; j++) {
                 let listTask = document.createElement('li');
                 listTask.setAttribute('class', 'listTask');
                 listTask.setAttribute('id', 'listTask'.concat(j));
@@ -181,13 +207,11 @@ function Lists() {
                 col4.appendChild(ul);
             }
 
-            col4.addEventListener('click', function() {
+            col4.addEventListener('click', function () {
                 console.log('oui', i);
                 showList(i);
-        });
-            
+            });
         }
-
         basis.appendChild(lists)
     }
 }

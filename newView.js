@@ -1,11 +1,17 @@
-let listCount = 0;
 let divSelected;
 let taskCount = 0;
 let achievement = 0;
+let listCount;
 
 let lists = new Lists();
+if (lists.list.length == 0 ){
+    listCount = lists.list.length;
+} else {
+    listCount = lists.list.length + 1;
+}
 
-addEventListener('load', function() {
+
+addEventListener('load', function () {
     start();
 })
 
@@ -22,7 +28,7 @@ function start() {
 
 
     let pres = document.getElementById('presentation');
-    pres.addEventListener('click', function() {
+    pres.addEventListener('click', function () {
         if (lists.list.length > 0) {
             lists.dom();
         }
@@ -37,11 +43,21 @@ function showLists() {
         let firstList = new List('Titre', listCount);
         lists.addList(firstList);
         firstList.dom();
-        listCount ++;
+        listCount++;
         divSelected = firstList.id;
     }
 }
 
 function showList(id) {
     lists.list[id].dom()
+    lists.list[id].progress()
+}
+
+function newList() {
+    let newList = new List('Titre', listCount);
+    lists.addList(newList);
+    newList.dom();
+    newList.progress();
+    listCount++;
+    divSelected = newList.id;
 }
