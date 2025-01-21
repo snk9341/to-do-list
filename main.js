@@ -182,7 +182,8 @@ function Lists() {
             }
 
             col4.addEventListener('click', function() {
-                console.log('oui');
+                console.log('oui', i);
+                showList(i);
         });
             
         }

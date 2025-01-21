@@ -27,11 +27,10 @@ function start() {
             lists.dom();
         }
     })
-
     showLists();
 }
 
-function showLists(id) {
+function showLists() {
     if (lists.list.length != 0) {
         lists.dom();
     } else if (lists.list.length == 0) {
@@ -41,4 +40,8 @@ function showLists(id) {
         listCount ++;
         divSelected = firstList.id;
     }
+}
+
+function showList(id) {
+    lists.list[id].dom()
 }
